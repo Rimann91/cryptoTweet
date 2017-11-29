@@ -1,0 +1,19 @@
+{
+  "name": "cryptotweet",
+  "version": "1.0.0",
+  "description": "A web app game that allows participants to place long and short positions on the Bitcoin price via a twitter hashtag. Keeps record of high scores. No real money involved.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Riley Hughes",
+  "license": "ISC",
+  "dependencies": {
+    "bulma": "^0.6.1",
+    "express": "^4.16.2",
+    "oauth-percent-encode": "^0.1.2",
+    "pug": "^2.0.0-rc.4",
+    "request": "^2.83.0",
+    "twitter": "^1.7.1"
+  }
+}
