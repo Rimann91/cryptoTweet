@@ -1,9 +1,10 @@
 'use strict';
 
 getPrice();
-setInterval(function(){
-	getPrice();
-}, 5000);
+
+//setInterval(function(){
+//	getPrice();
+//}, 5000);
 
 function getPrice () {
 	
