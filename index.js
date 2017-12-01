@@ -47,11 +47,11 @@ app.get('/gamepage/twitter', function(req, res){
 			// Game Module Calls
 			for(let i = 0; i < 12; i++){
 				
-				mix.getTweets(tweetData.statuses[i].user.name, tweetData.statuses[i].text); //send tweet to storage
-				
-				
-				mix.getLastPrice();
-				mix.trackScores(tweetData.statuses[i].user.name);
+				mix.getTweets(tweetData.statuses[i].user.name, tweetData.statuses[i].text); //Store tweet
+				mix.getLastPrice(); // set the last price
+				let last = mix.lastPrice;
+				console.log('last price: '+ last);
+				mix.trackScores(tweetData.statuses[i].user.name); // look for cmd and change score accordingly
 			}
 			res.json({
 				allTweets: mix.tweets,
@@ -65,10 +65,7 @@ app.get('/gamepage/twitter', function(req, res){
 			console.log(error);
 		}
 		//console.log(data.statuses);
-		
-
 	});
-	
 });
 
 app.get('/gamepage/cryptowatch', function(req, res){

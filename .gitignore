@@ -39,4 +39,5 @@ Thumbs.db
 # NODE MODULES #
 ################
 node_modules/
+bulma/
 test_module.js

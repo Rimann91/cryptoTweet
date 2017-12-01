@@ -3,9 +3,9 @@
 getTweets();
 getPrice();
 
-//setInterval(function(){
-//	getPrice();
-//}, 5000);
+setInterval(function(){
+	getTweets();
+}, 10* 1000);
 
 function getTweets () {
 	
@@ -13,19 +13,35 @@ function getTweets () {
 	xhrTweets.open('GET', 'http://localhost:3003/gamepage/twitter', true);
 	xhrTweets.addEventListener('load', function(){
 		console.log('loaded');
-
+		//getPrice();
 		let data = JSON.parse(xhrTweets.response);
+		let mostRecent = 0//data.allTweets.length-1;
 		console.log(data);
 		console.log(data.allTweets);
 		console.log(data.price);
 		console.log(data.scores);
 
-		let parent = document.getElementById('gameresults');
-		let displayText = document.createTextNode(data.allTweets[0].text);
-		let displayPrice = document.createTextNode(data.price);
-		parent.appendChild(displayText);
-		parent.appendChild(displayPrice);
+		let oldContainer = document.getElementById('gameresults');
+		let newContainer = document.createElement('div');
+		newContainer.setAttribute('id', 'gameresults');
+		document.getElementById('resultcontainer').replaceChild(newContainer, oldContainer);
 
+		let resultDisplay = document.createElement('div');
+		resultDisplay.setAttribute('class', 'tweetContainer');
+		let newTweet = document.createElement('p');
+		let tweetUser = document.createElement('p');
+		let newPrice = document.createElement('p');
+		let displayText = document.createTextNode(data.allTweets[mostRecent].text);
+		let displayUser = document.createTextNode(data.allTweets[mostRecent].user);
+		let displayPrice = document.createTextNode(data.price);
+
+		newContainer.appendChild(resultDisplay);
+		resultDisplay.appendChild(tweetUser);
+		resultDisplay.appendChild(newTweet);
+		resultDisplay.appendChild(newPrice);
+		newTweet.appendChild(displayText);
+		tweetUser.appendChild(displayUser);
+		newPrice.appendChild(displayPrice);
 		
 	});
 
@@ -47,7 +63,7 @@ function getPrice () {
 	xhrPrice.addEventListener('load', function(){
 		console.log('loaded');
 
-		let data = JSON.parse(xhrPrice.response);
+		//let data = JSON.parse(xhrPrice.response);
 		//console.log(data.price);
 
 		//let parent = document.getElementById('gameResults');
