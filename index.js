@@ -30,12 +30,15 @@ let client = new twitter({
 
 let params = {
 	screen_name: 'rimannnhs',
-	q:'%23CSC365' ,
+	q: 'long',//q:'%23CSC365' ,
+	q: 'short',
 	include_entities: 'true',
-	with_user_id: 'true'
+	with_user_id: 'true',
+	type: 'recent'
 };
 
 app.get('/gamepage/twitter', function(req, res){
+
 	let tweetData = {};
 	client.get('search/tweets.json', params, function(error, tweets, response){
 
@@ -45,18 +48,27 @@ app.get('/gamepage/twitter', function(req, res){
 			tweetData.statuses = data.statuses; 	
 
 			// Game Module Calls
-			for(let i = 0; i < 12; i++){
+
+			let lastTweet = mix.tweets.length-1;
+			console.log(lastTweet);
+			let user = tweetData.statuses[0].user.name;
+			let text = tweetData.statuses[0].text;
+			if(text != mix.tweets[lastTweet].text){
 				
-				mix.getTweets(tweetData.statuses[i].user.name, tweetData.statuses[i].text); //Store tweet
-				mix.getLastPrice(); // set the last price
+				mix.getUser(user, text, data.statuses[0].user.profile_image_url); //Store tweet
 				let last = mix.lastPrice;
 				console.log('last price: '+ last);
-				mix.trackScores(tweetData.statuses[i].user.name); // look for cmd and change score accordingly
+				console.log('this price:'+ mix.price)
+				mix.trackScores(tweetData.statuses[0].user.name); // look for cmd and change score accordingly
+			
 			}
+
+			let score = mix.getScoreByName(user).userScore;
 			res.json({
 				allTweets: mix.tweets,
 				price: mix.price,
-				scores: mix.scores
+				lastPrice: mix.lastPrice,
+				allData: tweetData
 			});
 
 			//console.log(mix.tweets);
@@ -81,6 +93,7 @@ app.get('/gamepage/cryptowatch', function(req, res){
 
 		// Game Module Calls
 		console.log(data);
+		mix.getLastPrice(); // set the last price
 		mix.getPrice(data.result.price); //send price to storage
 		
 		res.json({
