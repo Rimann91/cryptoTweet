@@ -1,3 +1,10 @@
 extends layout
+block style
+	link(rel = "stylesheet" type = "text/css" href = "/css/landing.css")
+
 block main content
-	p landing page 
+	h1.title Welcome to Cryptotweet
+	p CryptoTweet is a webb application that ties twitter to Cryptowatch.
+	h2.subtitle How it Works
+	p#how cryptotweet reads tweets contining either the word long or short and compares it to the current BTC price at GDAX. If the word is 'long' and the price went up since the last tweet, points are added based on the amount of change multiplied by ten. If the price dropped the tweeter loses points. The scoring algorithm is opposite for the word 'Short'.
+	img(src='/images/btc-symbol.jpg')

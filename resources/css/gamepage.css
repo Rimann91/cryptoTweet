@@ -1,0 +1,75 @@
+body{
+	background-color: #282828
+}
+.columns{
+	/*border: solid black 3px;*/
+	border-radius: 15px;
+	margin: 5px 0px 5px 0px
+}
+
+
+.column{
+	margin: 2px 2px 2px 2px;
+	background-color: #458488;
+	border-radius: 15px;
+}
+
+.ahs{
+
+	margin: 10px 5px 10px 5px;
+	background-color: #d79921;
+}
+
+#price{
+	text-align: center;
+	font: bold 30px 'monospace';
+	background-color: #fabd2f;
+}
+
+#hs{
+	text-align: center;
+	margin: 25px 100px 25px 100px;
+	font: bold 20px 'monospace';
+}
+
+#gameresults{
+}
+
+#tweetID{
+	text-align: center;
+	line-height: 45px;
+	color: black;
+
+}
+#result0 {
+	width: 50%;
+	text-align: center;
+	line-height: center;
+	color: black;
+}
+
+#result1 {
+	font: bold 40px 'monospace';
+	text-align: center;
+	line-height: 45px;
+}
+
+#add{
+	background-color: #b8bb26;
+	font: bold 40px 'monospace';
+	text-align: center;
+	line-height: 45px;
+}
+
+#subtract{
+	background-color: #fb4934;
+	font: bold 40px 'monospace';
+	text-align: center;
+	line-height: 45px;
+}
+#long{
+	background-color: #b8bb26;
+}
+#short{
+	background-color: #fb4934;
+}

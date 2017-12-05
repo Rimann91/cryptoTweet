@@ -1,14 +1,17 @@
 'use strict';
 
 let mix = {};
-mix.tweets = [{user:'John', text:'long' },{user:'John2', text:'long' },{user:'John3', text:'long' },{user:'John4', text:'long' },{user:'John5', text:'long' },{user:'John6', text:'long' },{user:'John7', text:'long' },];
+
+mix.tweets = [{user:'John Doe', text:'long', userScore: 0 }];
 mix.price = 0;
 mix.lastPrice = 0;
-//mix.scores = [];
+mix.userScores = {};
+mix.highScores = [];
 
 mix.getTweets = function(user, tweet){
 	mix.tweets.push({user:user, text:tweet});
 };
+
 
 mix.getPrice = function(price){
 	mix.price = price;
@@ -24,6 +27,40 @@ mix.getScoreByName = function(user){
 	return name;
 };
 
+mix.getHighScores = function(){
+
+
+	let length = mix.tweets.length;
+	let highscores = [];
+	let hslength = 0;
+	let userscores = {};
+	let topThree = {};
+
+	for(let i = 0; i < length; i++){
+		let thisUserName = mix.tweets[i].user;
+		userscores[thisUserName] = mix.tweets[i].userScore;
+	}
+	for(const user in userscores){
+		highscores.push([user, userscores[user]]);
+	}
+	
+	highscores = highscores.sort(function(a,b){
+		return b[1] - a[1];
+	});
+
+	if(highscores.length < 3){
+		hslength = highscores.length-1;
+	}else{hslength = 2;}
+
+	for(let i = 0; i<=hslength; i++){
+		topThree[highscores[i][0]] = highscores[i][1];
+	}
+
+	console.log(highscores);
+	console.log(topThree);
+	return topThree;
+};
+
 mix.getUser = function(user, text, img_url){
 	function isUser(thisuser){
 		return thisuser.user == user;
@@ -31,12 +68,10 @@ mix.getUser = function(user, text, img_url){
 	if(mix.tweets.find(isUser) !== undefined){
 		
 		let userData = mix.tweets.find(item => item.user == user);
-		console.log('found user: '+ userData);
 		return userData;
 	}else{
 		mix.tweets.push({user:user, text: text, userScore: 0, img: img_url});
 		let userData = mix.tweets.find(item => item.user == user);
-		console.log('created user: '+ JSON.stringify(userData));
 		return userData;
 	}
 
@@ -46,13 +81,11 @@ mix.getUser = function(user, text, img_url){
 mix.trackScores = function(user){
 
 	/* may need to add funtionality to retrieve
-	more than 1 recent tweet */
-	//mix.scores.push({user:user, userScore:0});
+	more than single  recent tweet */
 	
 	let tweet = mix.tweets[mix.tweets.length-1].text;
-	let difference = Math.abs(mix.price - mix.lastPrice);
+	let difference = (Math.abs(mix.price - mix.lastPrice)*10);
 	let thisUser = mix.getUser(user);
-	console.log('this user: '+JSON.stringify(thisUser));
 	let cmdLong = tweet.search('long');
 	let cmdShort = tweet.search('short');
 
@@ -60,19 +93,19 @@ mix.trackScores = function(user){
 		console.log('found long');
 		if(mix.price > mix.lastPrice){
 			// User + difference
-			thisUser.userScore += difference;
+			thisUser.userScore += difference.toFixed(0);
 		}else{
 			// user - difference
-			thisUser.userScore -= difference;
+			thisUser.userScore -= difference.toFixed(0);
 		}
 	}else if(cmdShort > -1){
 		console.log('found short');
 		if(mix.price < mix.lastPrice){
 			// user + difference
-			thisUser.userScore += difference;
+			thisUser.userScore += difference.toFixed(0);
 		}else{
 			// user - difference
-			thisUser.userScore -= difference;
+			thisUser.userScore -= difference.toFixed(0);
 		}
 	}
 	console.log('diff: '+difference);

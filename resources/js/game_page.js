@@ -1,9 +1,9 @@
 'use strict';
 getTweets();
-
+getPrice();
 setInterval(function(){
 	getTweets();
-}, 5* 1000);
+}, 4* 1000);
 
 function getTweets () {
 	
@@ -13,18 +13,6 @@ function getTweets () {
 		console.log('loaded');
 		getPrice();
 		let data = JSON.parse(xhrTweets.response);
-		let mostRecent = data.allTweets.length-1;
-		//console.log('DATA++++++++++++');
-		console.log(data);
-		//console.log('TWEETS++++++++++++');
-		//console.log(data.allTweets);
-		//console.log('PRICES++++++++++');
-		//console.log('THIS PRICE');
-		//console.log(data.price);
-		//console.log('LAST PRICE');
-		//console.log(data.lastPrice);
-		//console.log(data.scores);
-		
 		let replylist = data.allTweets;
 		let liststart = 0;
 		let listend = 0;
@@ -33,7 +21,7 @@ function getTweets () {
 		if(replylist.length>=10){
 			
 			liststart = replylist.length-10;
-			listend = replylist.length 
+			listend = replylist.length ;
 		}else{
 			listend = replylist.length;
 		}
@@ -44,27 +32,78 @@ function getTweets () {
 		document.getElementById('resultcontainer').replaceChild(newContainer, oldContainer);
 
 		for(let i =liststart; i < listend; i++){
+
+			////// UPDATE BTC PRICE DISPLAY ////////
+			let newprice = document.createElement('p');
+			newprice.setAttribute('id','price');
+			let btcprice = document.createTextNode(`1 BTC = $${data.price}`);
+			let oldprice = document.getElementById('price');
+			let priceContainer = document.getElementById('priceDisplay');
+
+			////// UPDATE HIGHSCORES //////////////
+			let hsContainer = document.getElementById('hsContainer');
+			let newHighs = document.createElement('div');
+			newHighs.setAttribute('id', 'hs');
+			let oldHighs = document.getElementById('hs');
+			for(const prop in data.topThree){
+				let element = document.createElement('p');
+				element.setAttribute('class', 'ahs');
+				let displayhs = document.createTextNode(`${prop}: ${data.topThree[prop]}`);
+				newHighs.appendChild(element);
+				element.appendChild(displayhs);
+
+			}
+
+			////// UPDATE TWEET FEED //////////////
 			let score = data.allTweets[i].userScore;
-			score *= 100;
 			let resultDisplay = document.createElement('div');
-			resultDisplay.setAttribute('class', 'tweetContainer');
+			resultDisplay.setAttribute('class', 'columns');
+
+
 			let newTweet = document.createElement('p');
 			let tweetUser = document.createElement('p');
-			let newPrice = document.createElement('p');
+			let newScore = document.createElement('p');
 			let image = document.createElement('img');
-			image.setAttribute('src', data.allTweets[i].img)
+			let idColumn = document.createElement('div');
+			idColumn.setAttribute('class', 'column');
+			idColumn.setAttribute('id', 'tweetID');
+			resultDisplay.appendChild(idColumn);
+			idColumn.appendChild(image);
+			idColumn.appendChild(tweetUser);
+			let submitDisplay = [newTweet, newScore];
+
+			submitDisplay.forEach(function(item, index){
+				let column = document.createElement('div');
+				column.setAttribute('class', 'column');
+				column.setAttribute('id', 'result'+index);
+				resultDisplay.appendChild(column);
+				column.appendChild(item);
+
+			});
+
+			image.setAttribute('src', data.allTweets[i].img);
 			let displayText = document.createTextNode(data.allTweets[i].text);
 			let displayUser = document.createTextNode(data.allTweets[i].user);
-			let displayPrice = document.createTextNode(score.toFixed(2));
+			let displayPrice = document.createTextNode(score);
 
+			////// PLACE ALL UPDATED NODES ON DOM ////////
+			newprice.appendChild(btcprice);
+			priceContainer.replaceChild(newprice, oldprice);
+			
+			hsContainer.replaceChild(newHighs, oldHighs);	
+			
 			newContainer.prepend(resultDisplay);
-			resultDisplay.appendChild(tweetUser);
-			resultDisplay.appendChild(image);
-			resultDisplay.appendChild(newTweet);
-			resultDisplay.appendChild(newPrice);
+			let points = document.getElementById('result1');
+			console.log(data.cmd);
+			if(score > 0){
+				points.setAttribute('id', 'add');
+			}else if(score < 0){
+				points.setAttribute('id', 'subtract');
+			}
+
 			newTweet.appendChild(displayText);
 			tweetUser.appendChild(displayUser);
-			newPrice.appendChild(displayPrice);
+			newScore.appendChild(displayPrice);
 		}
 		
 	});
@@ -82,7 +121,7 @@ function getTweets () {
 function getPrice () {
 	
 	let xhrPrice = new XMLHttpRequest();
-	xhrPrice.open('GET', 'http://localhost:3003/gamepage/cryptowatch', true);
+	xhrPrice.open('GET', 'http://localhost:3003/cryptowatch/data', true);
 	// May not need this onload function
 	xhrPrice.addEventListener('load', function(){
 		console.log('loaded price');

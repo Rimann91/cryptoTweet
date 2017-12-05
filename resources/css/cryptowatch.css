@@ -1,0 +1,39 @@
+body{
+	background-color:#282828
+}
+.label{
+	margin: 5px 5px 5px 5px
+}
+#main-container{
+	text-align: center;
+	padding: 150px;
+}
+#price-container{
+	text-align: center;
+	background-color: #689d68;
+	border: solid #bdae94 5px;
+	padding: 15px;
+	margin: 10px 10px 10px 10px
+}
+#hl-container{
+	text-align: center;
+	background-color: #fe8019;
+	border: solid #bdae94 5px;
+	margin: 10px 10px 10px 10px
+	padding: 15px;
+}
+#change-container{
+	text-align: center;
+	background-color: #fabd2f;
+	border: solid #bdae94 5px;
+	padding: 15px;
+	margin: 10px 10px 10px 10px
+}
+#volume-container{
+	text-align: center;
+	background-color: #83a598;
+	border: solid #bdae94 5px;
+	padding: 15px;
+	margin: 10px 10px 10px 10px
+}
+

@@ -1,21 +1,16 @@
 extends layout
 block style
-	style.
-		.tweetContainer{
-			border: solid black 3px;
-			border-radius: 15px;
-			margin: 5px 0px 5px 0px
-		}
-		#gameresults{
-			margin-top: 100px;
-		}
+	link(rel = "stylesheet", type = 'text/css' href='/css/gamepage.css')
 block scripts
 	// game page.js
 	script(src='js/game_page.js')
 
-block heading
-	h1 welcome to the game
 block main content
+	div#priceDisplay
+		p#price price
+	div#hsContainer
+		div#hs
+			p high scores
 	div#resultcontainer
 		div#gameresults
 			p game results

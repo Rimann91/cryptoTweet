@@ -3,24 +3,34 @@ html
 	head
 		title CryptoTweet
 		meta(charset = 'UTF-8')
-		link(rel='stylesheet', href='css/bulma/css/bulma.css')
+		mets(name = 'viewport' content='width=device-width, initial-scale=1')
+		//olink(rel='stylesheet', href='css/bulma/css/bulma.css')
+		link(rel = 'stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css')
 		block style
 		block scripts
+		style.
+			.icon{
+			width: 75px;
+			height: 75px;
+			}
+			#logo{
+			color: black;
+			border-right: solid white 2px;
+			}
 	body
 		block navbar
 			div.container
 				nav.navbar.is-dark.is-fixed-top
-					div.navbar-brand
+					div.navbar-brand#logo
+						img(class = 'icon' src='/images/btctwitter.jpeg')
 						h2.navbar-item Crypto Tweet 
 					div.navbar-menu.is-active
 						.navbar-start
 							a.navbar-item(href='/') home 
 							a.navbar-item(href='/cryptowatch') cryptowatch 
-							a.navbar-item(href='/tweets') tweets 
+							a.navbar-item(href='/gamepage') game 
 				
 				section.section
-		block heading
-			h1 heading
 		block main content
 			p main content
 		block footer
